@@ -21,7 +21,23 @@ class Api::V1::Products::ProductsController < ApplicationController
     
   end
 
-  
+  def update
+    @product = Product.find(params[:id])
+
+    if @product.update(product_params)
+      render json: @product, status: :ok
+    else
+      render json: @product.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @product = Product.find(params[:id])
+    @product.destroy
+    render json: { success: true, message: 'Se retiro al producto con éxito' }, status: :ok
+  end
+
+
 
   private
 
